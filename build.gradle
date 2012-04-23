@@ -1,0 +1,45 @@
+apply plugin: 'groovy'
+apply plugin:'application'
+
+mainClassName="com.dawsonsystems.linuxmceagent.LinuxMCEAgent"
+
+group = 'org.linuxmce'
+version = '0.1'
+//name ="LinuxMCEAgent"
+packaging = 'jar'
+
+repositories {
+    mavenCentral()
+  mavenRepo url: "http://www.capricasoftware.co.uk/repo"
+  mavenRepo url: "http://4thline.org/m2"
+}
+
+dependencies {
+  compile group : 'uk.co.caprica', name: 'vlcj', version:'2.0.0'
+  compile group : 'org.fourthline.cling', name: 'cling-support', version:'2.0-SNAPSHOT'
+  groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.6'
+}
+
+//Make me a fat jar with everything in it.
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+
+//TODO.
+/*
+Import jvlc and make it load from http urls on demand.
+Create full screen image viewer and load from HTTP urls on demand.
+Add cling and have it work as a media renderer
+Import JDCE and have it work as a DCE device
+
+Create an 'AppServer' to manage this, running in the task bar.
+see if we can integrate with the player architecture to be controlled by the orbiters.
+
+Add desktop integration to play media via this player and also via the other lmce components.
+  Right click on .dvd, image, image dir
+      Play using lmce agent
+      Play to Media Director XXX
+              agent XXX
+
+*/
